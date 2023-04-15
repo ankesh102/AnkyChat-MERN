@@ -1,0 +1,76 @@
+//Entry point for Backend
+
+const express = require("express");
+require("dotenv").config();
+const app = express();
+// Import the dbConfig Files
+const dbConfig = require("./config/dbConfig");
+
+const port = process.env.PORT || 5000;
+
+const usersRoute = require("./routes/usersRoute");
+const chatsRoute = require("./routes/chatsRoute");
+const messagesRoute = require("./routes/messagesRoute");
+app.use(
+  express.json({
+    limit: "50mb",
+  })
+);
+
+const server = require("http").createServer(app);
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+// Check the connection of socket from client
+let onlineUsers = [];
+
+io.on("connection", (socket) => {
+  // socket events will be here
+  socket.on("join-room", (userId) => {
+    socket.join(userId);
+  });
+  // send message to clients (who are presents in member array)
+  socket.once("send-message", (message) => {
+    io.to(message.members[0])
+      .to(message.members[1])
+      .emit("receive-message", message);
+  });
+
+  // Clear Unread messages
+  socket.on("clear-unread-messages", (data) => {
+    io.to(data.members[0])
+      .to(data.members[1])
+      .emit("unread-messages-cleared", data);
+  });
+
+  // Typing Event
+  socket.on("typing", (data) => {
+    io.to(data.members[0]).to(data.members[1]).emit("started-typing", data);
+  });
+
+  // Online Users
+
+  socket.on("came-online", (userId) => {
+    if (!onlineUsers.includes(userId)) {
+      onlineUsers.push(userId);
+    }
+
+    io.emit("online-users-updated", onlineUsers);
+  });
+
+  socket.on("went-offline", (userId) => {
+    onlineUsers = onlineUsers.filter((user) => user != userId);
+    io.emit("online-users-updated", onlineUsers);
+  });
+});
+
+app.use("/api/users", usersRoute);
+app.use("/api/chats", chatsRoute);
+app.use("/api/messages", messagesRoute);
+
+server.listen(port, () => console.log(`Server running on port ${port}`));

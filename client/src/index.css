@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+    font-family: 'Montserrat' !important;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input{
+    height: 40px;
+    border: 1px solid rgb(117, 130, 199);
+    padding-left: 20px;
+
+
+}
+
+input:focus{
+    outline: none;
+    border: 1px solid rgb(23, 28, 52);
+}
+
+.outlined-btn {
+    border: 1px solid #302550;
+    color: #302550;
+    padding: 5px 20px;
+    height: 40px;
+    text-transform: uppercase;
+}
+
+.contained-btn {
+    background-image: linear-gradient(to right, #6a11cb 0%, #072f74 100%);
+    color: #ccc;
+    padding: 5px 20px;
+    height: 40px;
+    text-transform: uppercase;
+}
+
+.disabled-btn {
+    background-color: #cac8cd;
+    color: rgb(92, 90 , 90);
+    padding: 5px 20px;
+    height: 40px;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.file-input {
+    border: none !important;
+}
+
+.login-col {
+    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+}
+
+.login-col-body {
+    background-image: linear-gradient(-20deg, #a03f96 0%, #23a978 100%);
+}
+
+.inp-col {
+    background-color: #e4e0e0;
+}
