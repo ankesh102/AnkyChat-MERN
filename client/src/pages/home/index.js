@@ -4,7 +4,7 @@ import ChatArea from "./components/ChatArea";
 import UsersList from "./components/UsersList";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-const socket = io("http://localhost:5000");
+const socket = io("https://anky-chat.onrender.com");
 localStorage.setItem('socket' , socket);
 
 function Home() {
