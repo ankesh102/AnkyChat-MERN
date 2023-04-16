@@ -23,7 +23,6 @@ function UsersList({ searchKey, socket, onlineUsers, setSearchKey }) {
         const updatedChats = [...allChats, newChat];
         dispatch(SetAllChats(updatedChats));
         dispatch(SetSelectedChat(newChat));
-        setSearchKey("");
       } else {
         toast.error(response.message);
       }

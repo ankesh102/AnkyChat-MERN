@@ -5,7 +5,8 @@ import UsersList from "./components/UsersList";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 const socket = io("https://anky-chat.onrender.com");
-localStorage.setItem('socket' , socket);
+// const socket = io("http://localhost:5000");
+// localStorage.setItem('socket' , socket);
 
 function Home() {
   const [searchKey, setSearchKey] = useState("");

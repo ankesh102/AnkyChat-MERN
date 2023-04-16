@@ -6,8 +6,8 @@ import { toast } from "react-hot-toast";
 import { HideLoader, ShowLoader } from "../redux/loaderSlice";
 import { SetUser, SetAllUsers, SetAllChats } from "../redux/userSlice";
 import { GetAllChats } from "../apicalls/chats";
-import { io } from "socket.io-client";
-const socket = io("http://localhost:5000");
+// import { io } from "socket.io-client";
+// const socket = io("http://localhost:5000");
 
 function ProtectedRoute({ children }) {
   const { user } = useSelector((state) => state.userReducer);
@@ -83,7 +83,7 @@ function ProtectedRoute({ children }) {
           <i
             className="ri-logout-circle-r-line ml-5 text-xl cursor-pointer text-primary"
             onClick={() => {
-              socket.emit("went-offline", user._id);
+              // socket.emit("went-offline", user._id);
               localStorage.removeItem("token");
               navigate("/login");
             }}
